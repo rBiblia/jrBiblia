@@ -1,8 +1,8 @@
 package net.avensome.dev.jrbiblia
 
 import net.avensome.dev.jbibx.model.Bible
+import net.avensome.dev.jrbiblia.bibx.BibxCache
 import net.avensome.dev.jrbiblia.ext.BibleComparator
-import net.avensome.dev.jrbiblia.resource.bibx.BibxCache
 import tornadofx.*
 
 class MainController : Controller() {

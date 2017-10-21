@@ -1,6 +1,8 @@
-package net.avensome.dev.jrbiblia.resource.bibx
+package net.avensome.dev.jrbiblia.bibx
 
 import net.avensome.dev.jbibx.model.Bible
+import net.avensome.dev.jbibx.serde.BibxSerde
+import java.io.File
 
 object BibxCache : HashMap<LoadedBibxFile, Bible>() {
     fun rebuild() {
@@ -11,3 +13,9 @@ object BibxCache : HashMap<LoadedBibxFile, Bible>() {
         }
     }
 }
+
+class LoadedBibxFile(file: File, val contents: Bible) : File(file.toURI())
+
+object Deserializer : BibxSerde()
+
+fun File.load(): LoadedBibxFile = LoadedBibxFile(this, Deserializer.deserialize(this))

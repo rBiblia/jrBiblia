@@ -25,13 +25,14 @@ compileTestKotlin {
 }
 
 repositories {
-    mavenCentral()
     maven { url 'https://jitpack.io' }
+    mavenCentral()
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-    compile 'com.github.rBiblia:jbibx:master-SNAPSHOT'
+    compile 'com.github.rBiblia:jbibx:bc091ee5fe14a887166891660e496b165a01641a'
     compile 'no.tornado:tornadofx:1.7.11'
+    compile 'org.apache.commons:commons-lang3:3.6'
     // testCompile 'junit:junit:4.12'
 }

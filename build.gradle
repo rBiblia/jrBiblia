@@ -25,8 +25,8 @@ compileTestKotlin {
 }
 
 repositories {
-    maven { url 'https://jitpack.io' }
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -34,5 +34,6 @@ dependencies {
     compile 'com.github.rBiblia:jbibx:bc091ee5fe14a887166891660e496b165a01641a'
     compile 'no.tornado:tornadofx:1.7.11'
     compile 'org.apache.commons:commons-lang3:3.6'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.5'
     // testCompile 'junit:junit:4.12'
 }

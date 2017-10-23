@@ -17,7 +17,7 @@ object BibxProvider {
             if (SystemUtils.IS_OS_WINDOWS)
                 getAppData().resolve("JrBiblia\\bibles")
             else
-                getHome().resolve(".JrBiblia/Bibles")
+                getHome().resolve(".JrBiblia/bibles")
 
     private fun getExternalSource(): Path =
             getAppData().resolve("rBiblia\\bibx")

@@ -3,17 +3,21 @@ package net.avensome.dev.jrbiblia
 import javafx.scene.control.MenuButton
 import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
-import javafx.scene.layout.BorderPane
 import net.avensome.dev.jbibx.model.Bible
 import net.avensome.dev.jrbiblia.ext.MenuItem
 import tornadofx.*
 
 class MainView : View("JrBiblia") {
-    val controller: MainController by inject()
+    private val controller: MainController by inject()
 
-    override val root: BorderPane by fxml()
+    private val translationsDropdown = MenuButton(messages["translations"])
 
-    private val translationsDropdown: MenuButton by fxid()
+    override val root = borderpane {
+        top {
+            toolbar(translationsDropdown)
+        }
+        bottom(TasksView::class)
+    }
 
     private val emptyMenuItem: MenuItem = MenuItem(messages["noTranslations"], disabled = true)
     private val reloadMenuItem: MenuItem
@@ -30,16 +34,16 @@ class MainView : View("JrBiblia") {
             isDisable = true
             items.clear()
         }
-        runAsync { controller.reloadTranslations() } ui { translations ->
+        controller.reloadTranslations().completed.onChange {
+            val translations = controller.getTranslations()
             with(translationsDropdown) {
-                items.clear()
                 if (translations.isEmpty()) {
                     items.add(emptyMenuItem)
                 } else {
                     translations.forEach { items.add(TranslationMenuItem(it)) }
-                    items.add(SeparatorMenuItem())
-                    items.add(reloadMenuItem)
                 }
+                items.add(SeparatorMenuItem())
+                items.add(reloadMenuItem)
                 isDisable = false
             }
         }

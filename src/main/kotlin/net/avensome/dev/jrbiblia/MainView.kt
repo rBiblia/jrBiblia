@@ -4,8 +4,11 @@ import javafx.scene.control.MenuButton
 import javafx.scene.control.MenuItem
 import javafx.scene.control.SeparatorMenuItem
 import net.avensome.dev.jbibx.model.Bible
+import net.avensome.dev.jrbiblia.bibx.BibxProvider
 import net.avensome.dev.jrbiblia.ext.MenuItem
+import org.apache.commons.lang3.SystemUtils
 import tornadofx.*
+import java.nio.file.Path
 
 class MainView : View("JrBiblia") {
     private val controller: MainController by inject()
@@ -20,12 +23,18 @@ class MainView : View("JrBiblia") {
     }
 
     private val emptyMenuItem: MenuItem = MenuItem(messages["noTranslations"], disabled = true)
-    private val reloadMenuItem: MenuItem
+    private val translationsMenuFixedItems: List<MenuItem>
 
     init {
-        reloadMenuItem = MenuItem(messages["reloadTranslations"], {
-            updateTranslationsDropdown()
-        })
+        translationsMenuFixedItems = mutableListOf(
+                SeparatorMenuItem(),
+                MenuItem(messages["reloadTranslations"], { updateTranslationsDropdown() }),
+                exploreTranslationsMenuItem(messages["exploreLocalTranslations"], BibxProvider.getLocalSource())
+        )
+        if (SystemUtils.IS_OS_WINDOWS) {
+            val item = exploreTranslationsMenuItem(messages["exploreExternalTranslations"], BibxProvider.getExternalSource())
+            translationsMenuFixedItems.add(item)
+        }
         updateTranslationsDropdown()
     }
 
@@ -42,12 +51,13 @@ class MainView : View("JrBiblia") {
                 } else {
                     translations.forEach { items.add(TranslationMenuItem(it)) }
                 }
-                items.add(SeparatorMenuItem())
-                items.add(reloadMenuItem)
+                items.addAll(translationsMenuFixedItems)
                 isDisable = false
             }
         }
     }
+
+    private fun exploreTranslationsMenuItem(text: String, path: Path) = MenuItem(text, { controller.explore(path) })
 
     class TranslationMenuItem(bible: Bible) : MenuItem(bible.about.name)
 }

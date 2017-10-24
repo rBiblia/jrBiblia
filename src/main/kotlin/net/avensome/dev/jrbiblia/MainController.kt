@@ -3,6 +3,8 @@ package net.avensome.dev.jrbiblia
 import net.avensome.dev.jrbiblia.bibx.BibxCache
 import net.avensome.dev.jrbiblia.ext.BibleComparator
 import tornadofx.*
+import java.nio.file.Files
+import java.nio.file.Path
 
 class MainController : Controller() {
     private val tasksController: TasksController by inject()
@@ -23,6 +25,11 @@ class MainController : Controller() {
     }
 
     fun getTranslations() = BibxCache.values.toSortedSet(BibleComparator)
+
+    fun explore(path: Path) {
+        Files.createDirectories(path)
+        hostServices.showDocument(path.toUri().toString())
+    }
 }
 
 class QuantifiableTaskStatus : TaskStatus() {

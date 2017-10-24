@@ -10,7 +10,7 @@ import java.util.*
 object BibxCache : HashMap<LoadedBibxFile, Bible>() {
     fun rebuild(): Flowable<LoadingProgress> = Flowable.create({ emitter ->
         val partials = LinkedList<LoadedBibxFile>()
-        val rawFiles = BibxProvider.getBibxFiles()
+        val rawFiles = BibxProvider.getBibxFiles().toList().sorted()
         clear()
         emitter.onNext(LoadingProgress(0, 0, rawFiles.size))
         var failed = 0

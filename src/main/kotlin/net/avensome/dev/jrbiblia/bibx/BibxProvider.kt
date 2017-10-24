@@ -6,21 +6,22 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.stream.Collectors
+import javax.swing.filechooser.FileSystemView
 
 object BibxProvider {
+    private val localBasePath by lazy { FileSystemView.getFileSystemView().defaultDirectory.toPath() }
+
     private fun getAppData(): Path =
             Paths.get(System.getenv("APPDATA") ?: throw UnsupportedPlatformException())
 
     private fun getHome(): Path = Paths.get(System.getProperty("user.home"))
 
-    private fun getLocalSource(): Path =
-            if (SystemUtils.IS_OS_WINDOWS)
-                getAppData().resolve("JrBiblia\\bibles")
-            else
-                getHome().resolve(".JrBiblia/bibles")
+    fun getLocalSource(): Path {
+        val relativePart = if (SystemUtils.IS_OS_WINDOWS) "JrBiblia\\bibx" else ".JrBiblia/bibx"
+        return localBasePath.resolve(relativePart)
+    }
 
-    private fun getExternalSource(): Path =
-            getAppData().resolve("rBiblia\\bibx")
+    fun getExternalSource(): Path = getAppData().resolve("rBiblia\\bibx")
 
     fun getBibxFiles(): Set<File> =
             if (SystemUtils.IS_OS_WINDOWS)

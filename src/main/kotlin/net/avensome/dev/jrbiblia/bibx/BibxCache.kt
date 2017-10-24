@@ -11,13 +11,18 @@ object BibxCache : HashMap<LoadedBibxFile, Bible>() {
     fun rebuild(): Flowable<LoadingProgress> = Flowable.create({ emitter ->
         val partials = LinkedList<LoadedBibxFile>()
         val rawFiles = BibxProvider.getBibxFiles()
-        emitter.onNext(LoadingProgress(0, rawFiles.size))
+        clear()
+        emitter.onNext(LoadingProgress(0, 0, rawFiles.size))
+        var failed = 0
         rawFiles.forEach {
-            partials.add(it.load())
-            emitter.onNext(LoadingProgress(partials.size, rawFiles.size))
+            try {
+                partials.add(it.load())
+                emitter.onNext(LoadingProgress(partials.size, failed, rawFiles.size))
+            } catch (e: Exception) {
+                emitter.onNext(LoadingProgress(partials.size, ++failed, rawFiles.size))
+            }
         }
         synchronized(this) {
-            clear()
             partials.forEach { put(it, it.contents) }
         }
         emitter.onComplete()
@@ -30,4 +35,6 @@ object Deserializer : BibxSerde()
 
 fun File.load(): LoadedBibxFile = LoadedBibxFile(this, Deserializer.deserialize(this))
 
-data class LoadingProgress(val loaded: Int, val total: Int)
+data class LoadingProgress(val successful: Int, val failed: Int, val total: Int) {
+    val processed: Int get() = successful + failed
+}

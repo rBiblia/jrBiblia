@@ -6,7 +6,7 @@ import tornadofx.*
 import java.nio.file.Files
 import java.nio.file.Path
 
-class MainController : Controller() {
+class TranslationsController : Controller() {
     private val tasksController: TasksController by inject()
 
     fun reloadTranslations(): TaskStatus {

@@ -1,4 +1,4 @@
-package net.avensome.dev.jrbiblia.ext
+package net.avensome.dev.jrbiblia.ui.util
 
 import javafx.event.ActionEvent
 import javafx.event.EventHandler

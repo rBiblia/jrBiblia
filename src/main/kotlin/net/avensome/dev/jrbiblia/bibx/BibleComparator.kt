@@ -1,4 +1,4 @@
-package net.avensome.dev.jrbiblia.ext
+package net.avensome.dev.jrbiblia.bibx
 
 import net.avensome.dev.jbibx.model.Bible
 import java.util.*

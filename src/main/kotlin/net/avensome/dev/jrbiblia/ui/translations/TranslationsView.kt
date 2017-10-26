@@ -1,18 +1,19 @@
-package net.avensome.dev.jrbiblia.ui
+package net.avensome.dev.jrbiblia.ui.translations
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 import javafx.event.EventHandler
-import javafx.scene.control.Button
-import javafx.scene.control.MenuButton
-import javafx.scene.control.MenuItem
-import javafx.scene.control.Tooltip
+import javafx.scene.control.*
 import javafx.scene.input.KeyCode
+import javafx.scene.paint.Color
 import net.avensome.dev.jrbiblia.bibx.BibxProvider
 import net.avensome.dev.jrbiblia.bibx.Translation
-import net.avensome.dev.jrbiblia.ext.MenuItem
-import net.avensome.dev.jrbiblia.ext.nonEmptyShortName
-import net.avensome.dev.jrbiblia.ext.orIfBlank
-import net.avensome.dev.jrbiblia.util.Fa
+import net.avensome.dev.jrbiblia.bibx.nonEmptyShortName
+import net.avensome.dev.jrbiblia.ui.Hotkey
+import net.avensome.dev.jrbiblia.ui.HotkeyGroup
+import net.avensome.dev.jrbiblia.ui.HotkeyManager
+import net.avensome.dev.jrbiblia.ui.util.Fa
+import net.avensome.dev.jrbiblia.ui.util.MenuItem
+import net.avensome.dev.jrbiblia.util.orIfBlank
 import org.apache.commons.lang3.SystemUtils
 import tornadofx.*
 import java.nio.file.Path
@@ -74,16 +75,66 @@ class TranslationsView : View() {
             HotkeyManager.add(Hotkey(keyCode, HotkeyGroup.TRANSLATION) {
                 controller.openTranslation(button.translation)
             })
+            button.graphic = HotkeyLabel(keyCode)
         }
     }
 
     private fun exploreMenuItem(text: String, path: Path) = MenuItem(text, { controller.explore(path) })
 
     class TranslationButton(val translation: Translation, openHandler: (Translation) -> Unit) : Button(translation.contents.about.nonEmptyShortName) {
+        override fun getUserAgentStylesheet(): String = Styles().base64URL.toExternalForm()
+
         init {
             minWidth = Button.USE_PREF_SIZE
             tooltip = Tooltip(translation.contents.about.name.orIfBlank(translation.nameWithoutExtension))
             onAction = EventHandler { openHandler(translation) }
+
+            graphicProperty().onChange { updateGraphicClass() }
+        }
+
+        private fun updateGraphicClass() {
+            if (graphic != null) {
+                addClass(Styles.withGraphic)
+            } else {
+                removeClass(Styles.withGraphic)
+            }
+        }
+
+        class Styles : Stylesheet() {
+            companion object {
+                val withGraphic by cssclass()
+            }
+
+            init {
+                s(withGraphic) {
+                    padding = box(4.px, 8.px, 4.px, 4.px)
+                }
+            }
+        }
+    }
+
+    class HotkeyLabel(keyCode: KeyCode) : Label(keyCode.name) {
+        override fun getUserAgentStylesheet(): String = Styles().base64URL.toExternalForm()
+
+        init {
+            addClass(Styles.hotkeyLabel)
+        }
+
+        class Styles : Stylesheet() {
+            companion object {
+                val hotkeyLabel by cssclass()
+            }
+
+            init {
+                s(hotkeyLabel) {
+                    fontSize = 10.px
+                    padding = box(0.px, 2.px)
+                    backgroundColor += Color(1.0, 1.0, 1.0, 0.5)
+                    borderColor += box(Color(0.0, 0.0, 0.0, 0.5))
+                    borderRadius += box(2.px)
+                    borderInsets = MultiValue(arrayOf(box(0.px)))
+                }
+            }
         }
     }
 }

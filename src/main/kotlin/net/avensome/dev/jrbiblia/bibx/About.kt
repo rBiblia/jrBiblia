@@ -1,6 +1,7 @@
-package net.avensome.dev.jrbiblia.ext
+package net.avensome.dev.jrbiblia.bibx
 
 import net.avensome.dev.jbibx.model.About
+import net.avensome.dev.jrbiblia.util.orIfBlank
 import java.util.regex.Pattern
 
 val About.nonEmptyShortName: String

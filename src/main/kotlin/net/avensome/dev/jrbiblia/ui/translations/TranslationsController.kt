@@ -1,7 +1,8 @@
-package net.avensome.dev.jrbiblia.ui
+package net.avensome.dev.jrbiblia.ui.translations
 
 import net.avensome.dev.jrbiblia.bibx.BibxCache
 import net.avensome.dev.jrbiblia.bibx.Translation
+import net.avensome.dev.jrbiblia.ui.tasks.TasksController
 import tornadofx.*
 import java.nio.file.Files
 import java.nio.file.Path

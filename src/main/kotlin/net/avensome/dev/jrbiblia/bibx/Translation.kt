@@ -1,7 +1,6 @@
 package net.avensome.dev.jrbiblia.bibx
 
 import net.avensome.dev.jbibx.model.Bible
-import net.avensome.dev.jrbiblia.ext.BibleComparator
 import java.io.File
 
 class Translation(file: File, val contents: Bible) : File(file.toURI()) {

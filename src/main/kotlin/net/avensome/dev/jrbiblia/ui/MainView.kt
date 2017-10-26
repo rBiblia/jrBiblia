@@ -1,4 +1,4 @@
-package net.avensome.dev.jrbiblia
+package net.avensome.dev.jrbiblia.ui
 
 import tornadofx.*
 

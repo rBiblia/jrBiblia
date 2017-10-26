@@ -1,4 +1,4 @@
-package net.avensome.dev.jrbiblia
+package net.avensome.dev.jrbiblia.ui
 
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList

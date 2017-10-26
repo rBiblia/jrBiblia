@@ -1,5 +1,7 @@
 package net.avensome.dev.jrbiblia
 
+import net.avensome.dev.jrbiblia.ui.MainView
+import net.avensome.dev.jrbiblia.ui.Styles
 import tornadofx.*
 
 class JrBibliaApp : App(MainView::class, Styles::class) {

@@ -1,4 +1,4 @@
-package net.avensome.dev.jrbiblia
+package net.avensome.dev.jrbiblia.ui
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 import javafx.scene.control.Button

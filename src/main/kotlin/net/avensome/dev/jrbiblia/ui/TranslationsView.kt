@@ -5,11 +5,9 @@ import javafx.scene.control.Button
 import javafx.scene.control.MenuButton
 import javafx.scene.control.MenuItem
 import javafx.scene.control.Tooltip
-import javafx.scene.layout.Region
 import net.avensome.dev.jrbiblia.bibx.BibxProvider
 import net.avensome.dev.jrbiblia.bibx.Translation
 import net.avensome.dev.jrbiblia.ext.MenuItem
-import net.avensome.dev.jrbiblia.ext.Rectangle
 import net.avensome.dev.jrbiblia.ext.nonEmptyShortName
 import net.avensome.dev.jrbiblia.ext.orIfBlank
 import net.avensome.dev.jrbiblia.util.Fa
@@ -24,22 +22,17 @@ class TranslationsView : View() {
     private val moreMenuItems = mutableListOf<MenuItem>().observable()
     private val moreMenuButton = MenuButton(null, Fa(FontAwesomeIcon.BARS))
 
-    override val root = toolbar {
-        borderpane {
-            val width = this@toolbar.widthProperty().minus(this@toolbar.paddingHorizontalProperty.times(2))
-            prefWidthProperty().bind(width)
-
-            center {
-                hbox(5) {
-                    minWidth = 0.0
-                    val clipRectangle = Rectangle(this@center.widthProperty(), heightProperty())
-                    clipProperty().bind(clipRectangle)
-                    prefWidth = Region.USE_COMPUTED_SIZE
-                    bindChildren(translationButtons) { it }
-                }
+    override val root = borderpane {
+        center {
+            toolbar {
+                prefHeightProperty().bind(this@borderpane.heightProperty())
+                bindChildren(translationButtons) { it }
             }
-            right {
-                add(moreMenuButton)
+        }
+        right {
+            toolbar {
+                prefHeightProperty().bind(this@borderpane.heightProperty())
+                this += moreMenuButton
             }
         }
     }

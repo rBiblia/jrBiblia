@@ -7,7 +7,10 @@ class SlotsView : View() {
 
     override val root = scrollpane(true, true) {
         hbox {
-            bindChildren(controller.slotables) { it.root }
+            bindChildren(controller.slotables) { slotable ->
+                slotable.root.prefHeightProperty().bind(this@hbox.heightProperty())
+                slotable.root
+            }
         }
     }
 }

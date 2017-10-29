@@ -11,11 +11,7 @@ class BrowserState(val translation: Translation) {
     var verse: Int = 1
 }
 
-class BrowserVM(translation: Translation) : ItemViewModel<BrowserState>() {
-    init {
-        item = BrowserState(translation)
-    }
-
+class BrowserVM(translation: Translation) : ItemViewModel<BrowserState>(BrowserState(translation)) {
     val translation: ReadOnlyObjectProperty<Translation> = bind { item.translation.toProperty() }
     val book = bind { item.book.toProperty() }
     val chapter = bind { item.chapter.toProperty() }

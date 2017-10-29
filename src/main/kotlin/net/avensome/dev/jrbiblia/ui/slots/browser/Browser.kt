@@ -13,9 +13,12 @@ class Browser : Slotable(Navigator::class, Reader::class) {
         }
     }
 
+    private val vm: BrowserVM by inject()
+
     init {
         root.addClass(Styles.browser)
         root.stylesheets += Styles.base64URL.toExternalForm()
+        slotableVM.title = vm.translation.get().displayName
     }
 
     object Styles : Stylesheet() {

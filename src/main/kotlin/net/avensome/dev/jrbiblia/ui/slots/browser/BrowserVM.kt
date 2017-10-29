@@ -1,15 +1,14 @@
 package net.avensome.dev.jrbiblia.ui.slots.browser
 
-import javafx.beans.property.SimpleIntegerProperty
-import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.ReadOnlyObjectProperty
+import net.avensome.dev.jbibx.model.BookID
 import net.avensome.dev.jrbiblia.bibx.Translation
 import tornadofx.*
 
-class BrowserState(translation: Translation) {
-    val translationProperty = SimpleObjectProperty(this, "translation", translation)
-    val bookProperty = SimpleObjectProperty(this, "book", null)
-    val chapterProperty = SimpleIntegerProperty(this, "chapter", 1)
-    val verseProperty = SimpleIntegerProperty(this, "verse", 1)
+class BrowserState(val translation: Translation) {
+    var book: BookID = translation.contents.books.first().id
+    var chapter: Int = 1
+    var verse: Int = 1
 }
 
 class BrowserVM(translation: Translation) : ItemViewModel<BrowserState>() {
@@ -17,8 +16,8 @@ class BrowserVM(translation: Translation) : ItemViewModel<BrowserState>() {
         item = BrowserState(translation)
     }
 
-    val translation = bind(BrowserState::translationProperty)
-    val book = bind(BrowserState::bookProperty)
-    val chapter = bind(BrowserState::chapterProperty)
-    val verse = bind(BrowserState::verseProperty)
+    val translation: ReadOnlyObjectProperty<Translation> = bind { item.translation.toProperty() }
+    val book = bind { item.book.toProperty() }
+    val chapter = bind { item.chapter.toProperty() }
+    val verse = bind { item.verse.toProperty() }
 }

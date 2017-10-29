@@ -19,6 +19,7 @@ object HotkeyManager : EventHandler<KeyEvent> {
     override fun handle(event: KeyEvent) {
         val hotkey = hotkeys.firstOrNull { it.matches(event) } ?: return
         hotkey.handler()
+        event.consume()
     }
 }
 

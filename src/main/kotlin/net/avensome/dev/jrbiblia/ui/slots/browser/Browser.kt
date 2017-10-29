@@ -5,10 +5,12 @@ import net.avensome.dev.jrbiblia.ui.slots.Slotable
 import tornadofx.*
 
 class Browser : Slotable(Navigator::class, Reader::class) {
-    val translation: Translation by param()
-
     companion object {
-        fun new(translation: Translation): Browser = find(Scope(), mapOf(Browser::translation to translation))
+        fun new(translation: Translation): Browser {
+            val vm = BrowserVM(translation)
+            val scope = Scope(vm)
+            return find(scope)
+        }
     }
 
     init {

@@ -4,5 +4,11 @@ import javafx.scene.control.Label
 import tornadofx.*
 
 class Navigator : View() {
-    override val root = Label("navigator")
+    private val vm: BrowserVM by inject()
+
+    override val root = Label()
+
+    init {
+        root.text = vm.translation.value.displayName
+    }
 }

@@ -8,6 +8,6 @@ object BibleComparator : Comparator<Bible> {
         return if (o1 == null) {
             if (o2 == null) 0 else -1
         } else if (o2 == null) 1
-        else o1.about.nonEmptyShortName.compareTo(o2.about.nonEmptyShortName)
+        else o1.about.withFallback.shortName.compareTo(o2.about.withFallback.shortName)
     }
 }

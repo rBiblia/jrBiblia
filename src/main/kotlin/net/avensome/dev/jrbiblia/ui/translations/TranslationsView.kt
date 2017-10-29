@@ -7,7 +7,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import net.avensome.dev.jrbiblia.bibx.BibxProvider
 import net.avensome.dev.jrbiblia.bibx.Translation
-import net.avensome.dev.jrbiblia.bibx.nonEmptyShortName
+import net.avensome.dev.jrbiblia.bibx.withFallback
 import net.avensome.dev.jrbiblia.ui.Hotkey
 import net.avensome.dev.jrbiblia.ui.HotkeyGroup
 import net.avensome.dev.jrbiblia.ui.HotkeyManager
@@ -81,7 +81,8 @@ class TranslationsView : View() {
 
     private fun exploreMenuItem(text: String, path: Path) = MenuItem(text, { controller.explore(path) })
 
-    class TranslationButton(val translation: Translation, openHandler: (Translation) -> Unit) : Button(translation.contents.about.nonEmptyShortName) {
+    class TranslationButton(val translation: Translation, openHandler: (Translation) -> Unit)
+        : Button(translation.contents.about.withFallback.shortName) {
         override fun getUserAgentStylesheet(): String = Styles().base64URL.toExternalForm()
 
         init {

@@ -1,18 +1,13 @@
 package net.avensome.dev.jrbiblia.ui.slots
 
-import javafx.scene.Node
 import tornadofx.*
+import kotlin.reflect.KClass
 
-abstract class Slotable : Fragment() {
-    val toolbarNodes: Array<Node> by param()
-    val contents: Node by param()
-
+abstract class Slotable(controls: KClass<out UIComponent>, contents: KClass<out UIComponent>) : Fragment() {
     override val root = borderpane {
         top {
-            toolbar(*toolbarNodes)
+            toolbar(find(controls).root)
         }
-        center {
-            this += contents
-        }
+        center(contents)
     }
 }

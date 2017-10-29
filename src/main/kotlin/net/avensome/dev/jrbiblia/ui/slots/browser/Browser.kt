@@ -1,15 +1,14 @@
 package net.avensome.dev.jrbiblia.ui.slots.browser
 
-import javafx.scene.Node
+import net.avensome.dev.jrbiblia.bibx.Translation
 import net.avensome.dev.jrbiblia.ui.slots.Slotable
 import tornadofx.*
 
-class Browser : Slotable() {
+class Browser : Slotable(Navigator::class, Reader::class) {
+    val translation: Translation by param()
+
     companion object {
-        fun new(toolbarNodes: Array<Node>, contents: Node): Browser = find(Scope(), mapOf(
-                Slotable::toolbarNodes to toolbarNodes,
-                Slotable::contents to contents
-        ))
+        fun new(translation: Translation): Browser = find(Scope(), mapOf(Browser::translation to translation))
     }
 
     init {

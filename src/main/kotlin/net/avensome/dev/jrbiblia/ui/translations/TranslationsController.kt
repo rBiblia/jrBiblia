@@ -1,6 +1,5 @@
 package net.avensome.dev.jrbiblia.ui.translations
 
-import javafx.scene.control.Label
 import net.avensome.dev.jrbiblia.bibx.BibxCache
 import net.avensome.dev.jrbiblia.bibx.Translation
 import net.avensome.dev.jrbiblia.ui.slots.SlotsController
@@ -38,7 +37,7 @@ class TranslationsController : Controller() {
 
     fun openTranslation(translation: Translation) {
         println(translation.nameWithoutExtension)
-        val browser = Browser.new(arrayOf(), Label("contents"))
+        val browser = Browser.new(translation)
         slotsController.slotables.add(browser)
     }
 }

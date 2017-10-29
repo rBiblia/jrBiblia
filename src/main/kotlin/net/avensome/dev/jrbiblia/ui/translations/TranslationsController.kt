@@ -36,7 +36,6 @@ class TranslationsController : Controller() {
     }
 
     fun openTranslation(translation: Translation) {
-        println(translation.nameWithoutExtension)
         val browser = Browser.new(translation)
         slotsController.slotables.add(browser)
     }

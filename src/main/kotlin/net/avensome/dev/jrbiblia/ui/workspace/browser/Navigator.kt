@@ -1,4 +1,4 @@
-package net.avensome.dev.jrbiblia.ui.slots.browser
+package net.avensome.dev.jrbiblia.ui.workspace.browser
 
 import javafx.scene.control.Label
 import tornadofx.*

@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane
 import javafx.scene.layout.Priority.ALWAYS
 import javafx.scene.layout.Region.USE_COMPUTED_SIZE
 import javafx.scene.layout.RowConstraints
+import net.avensome.dev.jrbiblia.ui.util.setAllAnchors
 import tornadofx.*
 
 class Window(vararg nodes: Node) : Fragment() {
@@ -24,10 +25,7 @@ class Window(vararg nodes: Node) : Fragment() {
         root.rowConstraints.setAll(rows)
         nodes.map { node ->
             val wrapper = AnchorPane(node)
-            AnchorPane.setTopAnchor(node, 0.0)
-            AnchorPane.setRightAnchor(node, 0.0)
-            AnchorPane.setBottomAnchor(node, 0.0)
-            AnchorPane.setLeftAnchor(node, 0.0)
+            setAllAnchors(node, 0.0)
             wrapper
         }.forEachIndexed { index, wrapper -> root.add(wrapper, 0, index) }
     }

@@ -1,4 +1,4 @@
-package net.avensome.dev.jrbiblia.ui.slots.browser
+package net.avensome.dev.jrbiblia.ui.workspace.browser
 
 import javafx.beans.property.ReadOnlyObjectProperty
 import net.avensome.dev.jbibx.model.BookID

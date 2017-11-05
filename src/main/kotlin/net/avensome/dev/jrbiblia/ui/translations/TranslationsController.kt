@@ -4,10 +4,10 @@ import javafx.scene.control.TitledPane
 import javafx.scene.layout.Pane
 import net.avensome.dev.jrbiblia.bibx.BibxCache
 import net.avensome.dev.jrbiblia.bibx.Translation
-import net.avensome.dev.jrbiblia.ui.slots.browser.Browser
 import net.avensome.dev.jrbiblia.ui.tasks.TasksController
 import net.avensome.dev.jrbiblia.ui.workspace.Window
 import net.avensome.dev.jrbiblia.ui.workspace.WorkspaceController
+import net.avensome.dev.jrbiblia.ui.workspace.browser.BrowserPane
 import tornadofx.*
 import java.nio.file.Files
 import java.nio.file.Path
@@ -39,11 +39,11 @@ class TranslationsController : Controller() {
     }
 
     fun openTranslation(translation: Translation) {
-        val browser = Browser.new(translation)  // TODO restore this
+        val browser = BrowserPane.new(translation)
         val window = if (workspaceController.windows.count() % 2 == 0)
-            Window(TitledPane("single", Pane()))
+            Window(browser.root)
         else
-            Window(TitledPane("top", Pane()), TitledPane("bottom", Pane()))
+            Window(browser.root, TitledPane("bottom", Pane()))
         workspaceController.windows.add(window)
     }
 }

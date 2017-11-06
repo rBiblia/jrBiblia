@@ -5,9 +5,9 @@ import net.avensome.dev.jrbiblia.ui.components.CustomTitle
 import net.avensome.dev.jrbiblia.ui.components.CustomTitledPane
 import tornadofx.*
 
-class BrowserPane : Fragment() {
+class BrowserFragment : Fragment() {
     companion object {
-        fun new(translation: Translation): BrowserPane {
+        fun new(translation: Translation): BrowserFragment {
             val vm = BrowserVM(translation)
             val scope = Scope(vm)
             return find(scope)

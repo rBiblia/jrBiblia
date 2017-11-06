@@ -12,7 +12,7 @@ import javafx.scene.layout.RowConstraints
 import net.avensome.dev.jrbiblia.ui.util.setAllAnchors
 import tornadofx.*
 
-class Window(vararg nodes: Node) : Fragment() {
+class Subwindow(vararg nodes: Node) : Fragment() {
     override val root = GridPane()
     private val column = ColumnConstraints(300.0, USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY,
             ALWAYS, LEFT, true)

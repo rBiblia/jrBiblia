@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane
 import net.avensome.dev.jrbiblia.ui.util.setAllAnchors
 import tornadofx.*
 
-open class CustomTitledPane() : TitledPane() {
+open class CustomTitledPane : TitledPane() {
     private val titlePane = AnchorPane()
 
     var title: Node?

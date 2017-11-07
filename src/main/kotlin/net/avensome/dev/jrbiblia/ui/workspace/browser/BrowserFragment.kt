@@ -1,8 +1,8 @@
 package net.avensome.dev.jrbiblia.ui.workspace.browser
 
 import net.avensome.dev.jrbiblia.bibx.Translation
-import net.avensome.dev.jrbiblia.ui.components.CustomTitle
 import net.avensome.dev.jrbiblia.ui.components.CustomTitledPane
+import net.avensome.dev.jrbiblia.ui.workspace.DetachNodeEvent
 import tornadofx.*
 
 class BrowserFragment : Fragment() {
@@ -22,7 +22,7 @@ class BrowserFragment : Fragment() {
         val navigator = find<Navigator>()
         val reader = find<Reader>()
 
-        root.title = CustomTitle(root.textProperty(), {})
+        root.title = BrowserTitleBar(root.textProperty(), { fire(DetachNodeEvent(root)) })
         root.content = borderpane {
             stylesheets += Styles.base64URL.toExternalForm()
             addClass(Styles.contentPane)

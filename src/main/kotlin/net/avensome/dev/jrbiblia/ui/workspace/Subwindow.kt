@@ -12,14 +12,19 @@ import javafx.scene.layout.RowConstraints
 import net.avensome.dev.jrbiblia.ui.util.setAllAnchors
 import tornadofx.*
 
-class Subwindow(vararg nodes: Node) : Fragment() {
+class Subwindow : Fragment() {
     override val root = GridPane()
     private val column = ColumnConstraints(300.0, USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY,
             ALWAYS, LEFT, true)
     private val row = RowConstraints(USE_COMPUTED_SIZE, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE,
             ALWAYS, TOP, true)
 
+    val initialNodes: List<Node> by param()
+    private val nodes = mutableListOf<Node>()
+
     init {
+        nodes.addAll(initialNodes)
+
         root.columnConstraints.setAll(column)
         val rows = List(nodes.size) { row }
         root.rowConstraints.setAll(rows)
@@ -28,5 +33,14 @@ class Subwindow(vararg nodes: Node) : Fragment() {
             setAllAnchors(node, 0.0)
             wrapper
         }.forEachIndexed { index, wrapper -> root.add(wrapper, 0, index) }
+
+        subscribe<DetachNodeEvent> { event ->
+            nodes.remove(event.node)
+            if (nodes.isEmpty()) {
+                fire(CloseWindowEvent(this@Subwindow))
+            }
+        }
     }
 }
+
+class DetachNodeEvent(val node: Node) : FXEvent()

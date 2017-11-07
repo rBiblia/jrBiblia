@@ -3,8 +3,9 @@ package net.avensome.dev.jrbiblia.ui.translations
 import net.avensome.dev.jrbiblia.bibx.BibxCache
 import net.avensome.dev.jrbiblia.bibx.Translation
 import net.avensome.dev.jrbiblia.ui.tasks.TasksController
-import net.avensome.dev.jrbiblia.ui.workspace.Vertical
+import net.avensome.dev.jrbiblia.ui.workspace.CreateWindowEvent
 import net.avensome.dev.jrbiblia.ui.workspace.WorkspaceController
+import net.avensome.dev.jrbiblia.ui.workspace.browser.BrowserFragment
 import tornadofx.*
 import java.nio.file.Files
 import java.nio.file.Path
@@ -36,11 +37,8 @@ class TranslationsController : Controller() {
     }
 
     fun openTranslation(translation: Translation) {
-        val window = if (workspaceController.model.count() % 2 == 0)
-            Vertical(translation)
-        else
-            Vertical(translation, translation)
-        workspaceController.model.add(window)
+        val browser = BrowserFragment.new(translation)
+        fire(CreateWindowEvent(browser.root))
     }
 }
 

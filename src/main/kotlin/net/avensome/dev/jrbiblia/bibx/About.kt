@@ -11,7 +11,7 @@ class AboutFallbacks(private val original: About) {
                         .split(Pattern.compile("\\s+"))
                         .map { it.replace(Regex.fromLiteral("^[a-zA-Z0-9]+"), "") }
                         .filter { it.isNotEmpty() }
-                        .joinToString("") { it.substring(0, 1) }
+                        .joinToString("") { if (it.toUpperCase() == it) it else it.substring(0, 1) }
                 ).orIfBlank("?")
 
     val name get() = original.name.orIfBlank(original.shortName).orIfBlank("?")

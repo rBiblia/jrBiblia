@@ -4,17 +4,17 @@ import javafx.scene.Node
 import tornadofx.*
 
 class WorkspaceController : Controller() {
-    val model = mutableListOf<Subwindow>().observable()
+    val verticals = mutableListOf<VerticalFragment>().observable()
 
     init {
-        subscribe<CreateWindowEvent> { event ->
-            val subwindow = find<Subwindow>(mapOf(Subwindow::initialNodes to listOf(event.node)))
-            model.add(subwindow)
+        subscribe<CreateVerticalEvent> { event ->
+            val vertical = find<VerticalFragment>(mapOf(VerticalFragment::initialWindows to listOf(event.node)))
+            verticals.add(vertical)
         }
-        subscribe<CloseWindowEvent> { event -> model.remove(event.window) }
+        subscribe<CloseVerticalEvent> { event -> verticals.remove(event.vertical) }
     }
 }
 
-class CreateWindowEvent(val node: Node) : FXEvent()
+class CreateVerticalEvent(val node: Node) : FXEvent()
 
-class CloseWindowEvent(val window: Subwindow) : FXEvent()
+class CloseVerticalEvent(val vertical: VerticalFragment) : FXEvent()

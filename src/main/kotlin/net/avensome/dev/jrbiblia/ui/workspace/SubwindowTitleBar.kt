@@ -1,4 +1,4 @@
-package net.avensome.dev.jrbiblia.ui.workspace.browser
+package net.avensome.dev.jrbiblia.ui.workspace
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 import javafx.beans.property.ReadOnlyStringProperty
@@ -9,7 +9,7 @@ import javafx.scene.layout.BorderPane
 import net.avensome.dev.jrbiblia.ui.util.Fa
 import tornadofx.*
 
-class BrowserTitleBar(text: ReadOnlyStringProperty, closeHandler: () -> Unit) : BorderPane() {
+class SubwindowTitleBar(text: ReadOnlyStringProperty, closeHandler: () -> Unit) : BorderPane() {
     private val close = Button(null, Fa(FontAwesomeIcon.TIMES))
     private val label = Label()
 

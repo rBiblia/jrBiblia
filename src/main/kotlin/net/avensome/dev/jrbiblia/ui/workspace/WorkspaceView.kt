@@ -7,7 +7,7 @@ class WorkspaceView : View() {
 
     override val root = scrollpane(true, true) {
         hbox {
-            bindChildren(controller.model) { it.root }
+            bindChildren(controller.verticals) { it.root }
         }
     }
 }

@@ -12,35 +12,35 @@ import javafx.scene.layout.RowConstraints
 import net.avensome.dev.jrbiblia.ui.util.setAllAnchors
 import tornadofx.*
 
-class Subwindow : Fragment() {
+class VerticalFragment : Fragment() {
     override val root = GridPane()
     private val column = ColumnConstraints(300.0, USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY,
             ALWAYS, LEFT, true)
     private val row = RowConstraints(USE_COMPUTED_SIZE, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE,
             ALWAYS, TOP, true)
 
-    val initialNodes: List<Node> by param()
-    private val nodes = mutableListOf<Node>()
+    val initialWindows: List<Node> by param()
+    private val windows = mutableListOf<Node>()
 
     init {
-        nodes.addAll(initialNodes)
+        windows.addAll(initialWindows)
 
         root.columnConstraints.setAll(column)
-        val rows = List(nodes.size) { row }
+        val rows = List(windows.size) { row }
         root.rowConstraints.setAll(rows)
-        nodes.map { node ->
-            val wrapper = AnchorPane(node)
-            setAllAnchors(node, 0.0)
+        windows.map { window ->
+            val wrapper = AnchorPane(window)
+            setAllAnchors(window, 0.0)
             wrapper
         }.forEachIndexed { index, wrapper -> root.add(wrapper, 0, index) }
 
-        subscribe<DetachNodeEvent> { event ->
-            nodes.remove(event.node)
-            if (nodes.isEmpty()) {
-                fire(CloseWindowEvent(this@Subwindow))
+        subscribe<CloseWindowEvent> { event ->
+            windows.remove(event.window)
+            if (windows.isEmpty()) {
+                fire(CloseVerticalEvent(this@VerticalFragment))
             }
         }
     }
 }
 
-class DetachNodeEvent(val node: Node) : FXEvent()
+class CloseWindowEvent(val window: Node) : FXEvent()
